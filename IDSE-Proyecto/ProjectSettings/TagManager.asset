@@ -9,6 +9,9 @@ TagManager:
   - Peligroso
   - Seguro
   - Meta
+  - Pared
+  - nutriente
+  - Contador
   layers:
   - Default
   - TransparentFX
