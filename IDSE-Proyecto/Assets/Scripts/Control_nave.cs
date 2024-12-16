@@ -6,27 +6,35 @@ public class Control_nave : MonoBehaviour
 {
     private Rigidbody rb;
     private AudioSource audioSource;
-    public Slider barraDeAgua;  // Referencia al Slider de la barra de combustible
+    public Slider barraDeAgua;
 
-    [SerializeField] private GameObject gameOverPanel; // Panel de Game Over
-    [SerializeField] private float propulseForce = 3f; // Fuerza de propulsi�n (ajustable)
-    [SerializeField] private float rotationSpeed = 100f; // Velocidad de rotaci�n (ajustable)
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject nivelCompletoPanel;
+    [SerializeField] private Image[] nutrientIcons; // Array of icons for nutrients
+    [SerializeField] private Sprite litSprite; // Sprite for "lit" icon
+    [SerializeField] private Sprite dimmedSprite; // Sprite for "dimmed" icon
+    [SerializeField] private float propulseForce = 3f;
+    [SerializeField] private float rotationSpeed = 100f;
+
+    public int nutrientesRecolectados = 0;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
 
-        if (audioSource == null)
-        {
-            Debug.LogError("AudioSource component not found on the GameObject. Please add an AudioSource.");
-        }
-
-        // Asegurarse de que el panel de Game Over est� desactivado al inicio
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(false);
         }
+
+        if (nivelCompletoPanel != null)
+        {
+            nivelCompletoPanel.SetActive(false);
+        }
+
+        // Initialize icons to the dimmed state
+        UpdateNutrientIcons();
     }
 
     void Update()
@@ -69,6 +77,25 @@ public class Control_nave : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        // Detecta si el objeto tiene el Tag "Nutriente"
+        if (other.CompareTag("nutriente"))
+        {
+            Debug.Log("Nutriente recolectado!");
+
+            // Incrementa el contador de nutrientes
+            IncrementarNutrientes();
+        }
+        else if (other.CompareTag("Muerto"))
+        {
+            GameOver();
+
+        }
+
+    }
+
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Seguro"))
@@ -85,21 +112,60 @@ public class Control_nave : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Meta"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            NivelCompletado();
         }
     }
 
     private void GameOver()
     {
-        // Mostrar el panel de Game Over
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
         }
 
-        // Desactivar el cohete
+        nutrientesRecolectados = 0;
+        UpdateNutrientIcons();
+
         gameObject.SetActive(false);
         barraDeAgua.gameObject.SetActive(false);
-        
+    }
+
+    private void NivelCompletado()
+    {
+        if (nivelCompletoPanel != null)
+        {
+            nivelCompletoPanel.SetActive(true);
+        }
+
+        gameObject.SetActive(false);
+        barraDeAgua.gameObject.SetActive(false);
+    }
+
+    public void IncrementarNutrientes()
+    {
+        nutrientesRecolectados++;
+
+        // Update the UI icons based on the number of nutrients collected
+        UpdateNutrientIcons();
+    }
+
+    public void UpdateNutrientIcons()
+    {
+        for (int i = 0; i < nutrientIcons.Length; i++)
+        {
+            if (i < nutrientesRecolectados)
+            {
+                nutrientIcons[i].sprite = litSprite; // Light up the icon
+            }
+            else
+            {
+                nutrientIcons[i].sprite = dimmedSprite; // Keep the icon dimmed
+            }
+        }
+    }
+
+    public void siguienteNivel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

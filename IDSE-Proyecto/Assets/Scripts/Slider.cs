@@ -93,6 +93,11 @@ public class BarraDeCombustible : MonoBehaviour
         if (jugador != null)
         {
             jugador.gameObject.SetActive(false);  // Desactivar el jugador
+            Control_nave controlNave = jugador.GetComponent<Control_nave>();
+
+            controlNave.nutrientesRecolectados = 0;
+            controlNave.UpdateNutrientIcons();
+
         }
 
         // Hacer invisible el slider (deactivarlo)
