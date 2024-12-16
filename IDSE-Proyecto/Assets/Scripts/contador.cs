@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class contador : MonoBehaviour
 {
-    private float puntos = 0;
+    public static contador Instance;
+    [SerializeField] private float puntos;
     public UnityEngine.UI.Text textoPuntos;
 
-    private void Start()
+    private void Awake()
     {
-        textoPuntos.text = "Puntaje: 0";
-    }
+        if(contador.Instance == null)
+        {
+            contador.Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
 
-    private void Update()
-    {
-        textoPuntos.text = "Puntaje: " + puntos;
     }
 
     public void SumarPuntos(float cantidad)

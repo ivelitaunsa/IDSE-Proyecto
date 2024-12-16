@@ -3361,6 +3361,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1439347475}
+        m_TargetAssemblyTypeName: contador, Assembly-CSharp
+        m_MethodName: Reiniciar
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1568976680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4644,10 +4656,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rocket: {fileID: 1760797113}
-  camera: {fileID: 0}
   gameOverPanel: {fileID: 1313312760}
   cameraReturnSpeed: 5
-  playerScore: 0
+  contador: {fileID: 0}
 --- !u!65 &1967702484
 BoxCollider:
   m_ObjectHideFlags: 0

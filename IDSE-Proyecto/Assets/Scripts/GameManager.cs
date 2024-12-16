@@ -6,7 +6,6 @@ using System; // Agregar esta l�nea
 public class GameManager : MonoBehaviour
 {
     public Transform rocket;         // Referencia al cohete
-    public Transform camera;         // Referencia a la c�mara
     public GameObject gameOverPanel; // Referencia al panel de Game Over
     public float cameraReturnSpeed = 5f; // Velocidad del desplazamiento de la c�mara
 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class nutriente : MonoBehaviour
 {
-    [SerializeField] private contador puntaje;
     [SerializeField] private float cantidadPuntos;
     // Start is called before the first frame update
     void Start()
@@ -22,7 +21,7 @@ public class nutriente : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            puntaje.SumarPuntos(cantidadPuntos);
+            contador.Instance.SumarPuntos(cantidadPuntos);
             Debug.Log("Nutriente!!!");
             gameObject.SetActive(false);
         }
