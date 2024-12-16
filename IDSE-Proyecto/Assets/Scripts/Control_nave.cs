@@ -163,9 +163,4 @@ public class Control_nave : MonoBehaviour
             }
         }
     }
-
-    public void siguienteNivel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
 }
